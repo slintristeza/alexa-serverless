@@ -5,6 +5,6 @@ export const alexa = Ask.SkillBuilders.custom()
   .addRequestHandlers({
     canHandle: handlerInput => true,
     handle: handlerInput =>
-      handlerInput.responseBuilder.speak('Hello world!').getResponse()
+      handlerInput.responseBuilder.speak('かずしげ　よしだ').getResponse()
   })
   .lambda();
