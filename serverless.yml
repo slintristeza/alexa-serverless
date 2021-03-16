@@ -43,12 +43,22 @@ custom:
           ja-JP:
             interactionModel:
               languageModel:
-                invocationName: serverless typescript
+                invocationName: 'ゴミスキル'
                 intents:
-                  - name: HelloIntent
+                  - name: AMAZON.CancelIntent
+                    samples: []
+                  - name: AMAZON.HelpIntent
+                    samples: []
+                  - name: AMAZON.StopIntent
+                    samples: []
+                  - name: garbageDateIntent
+                    slots:
+                      - name: targetDate
+                        type: AMAZON.DATE
                     samples:
-                      - 'hello'
-
+                    - '{targetDate} のゴミを教えて'
+                    - '{targetDate} のゴミは'
+                    - '{targetDate} のゴミは何'
 functions:
   alexa:
     handler: handler.alexa
