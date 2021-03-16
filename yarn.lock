@@ -300,7 +300,7 @@ ask-sdk-runtime@^2.10.1:
   resolved "https://registry.yarnpkg.com/ask-sdk-runtime/-/ask-sdk-runtime-2.10.1.tgz#72b8a157c9f5052f43f7f592772cbb1bebd4ce6f"
   integrity sha512-BFEs0UFGvjpKmbYSVhcFa1Oh+eyfCkWULanV+mWTxHTJ7aeB+UsZ8TvkDWZOnHsn0shAFtvkmun4tjx8eOR7uA==
 
-ask-sdk@^2.3.0:
+ask-sdk@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/ask-sdk/-/ask-sdk-2.10.0.tgz#8496fda8f098f4c10805ef6869f75c87be40fe80"
   integrity sha512-FsiTYJO/eP33mHEXimoOCy7QAwcJHZJwzL8fZnUFm5h+qj02nY31TNUJbWvYGHfq7csqaUkF5/G3jpNMCb/aXg==
