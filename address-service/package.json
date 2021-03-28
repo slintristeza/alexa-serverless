@@ -1,0 +1,17 @@
+{
+  "name": "asdev-serverless",
+  "version": "1.0.0",
+  "description": "Alexa example using Typescript",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "leveldown prebuild-linux-x64"
+  },
+  "dependencies": {
+    "imi-enrichment-address": "https://info.gbiz.go.jp/tools/imi_tools/resource/imi-enrichment-address/imi-enrichment-address-2.0.0.tgz",
+    "leveldown": "^5.4.1"
+  },
+  "devDependencies": {},
+  "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
+  "license": "MIT"
+}

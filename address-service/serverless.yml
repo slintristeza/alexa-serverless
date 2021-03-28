@@ -1,0 +1,45 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: address-service # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  profile: default
+  region: ${opt:region, 'ap-northeast-1'}
+  versionFunctions: false # Optional function versioning
+
+package:
+  individually: true
+
+functions:
+  getAddress:
+    handler: getAddress.handler
+    name: getAddress-${self:provider.stage}
+    description: get address use imi-enrichment-address
+    memorySize: 512
+    timeout: 60
+    package:
+      include:
+        - getAddress.js
+    events:
+      - http:
+          path: address
+          method: POST
+          cors: true
