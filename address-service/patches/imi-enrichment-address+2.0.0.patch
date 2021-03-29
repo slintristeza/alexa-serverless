@@ -1,0 +1,20 @@
+diff --git a/node_modules/imi-enrichment-address/main.js b/node_modules/imi-enrichment-address/main.js
+index d0d7981..8f2a47c 100755
+--- a/node_modules/imi-enrichment-address/main.js
++++ b/node_modules/imi-enrichment-address/main.js
+@@ -1,4 +1,4 @@
+-const fs = require("fs");
++const fs = require("fs-extra");
+ const find = require("./lib/find");
+ const bangou = require("./lib/bangou");
+ 
+@@ -40,7 +40,8 @@ module.exports = function(src) {
+     return Promise.resolve(dst);
+   }
+ 
+-  const db = levelup(leveldown(__dirname + "/db"));
++  fs.copySync(__dirname + "/db", "/tmp" + __dirname + "/db");
++  const db = levelup(leveldown("/tmp" + __dirname + "/db"));
+   const promises = targets.map(target => {
+     const address = target["住所"] || target;
+     const response = find(address["表記"]);
