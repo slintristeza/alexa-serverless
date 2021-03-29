@@ -7,7 +7,7 @@ import { getAddress } from './addressUtil';
 import addressGroup from './csvUtils/addressGroup.json';
 import garbageCollectionSchedule from './csvUtils/garbageCollectionSchedule.json';
 
-export const alexa = Ask.SkillBuilders.custom()
+export const handler = Ask.SkillBuilders.custom()
   .addRequestHandlers({
     canHandle: (handlerInput) => {
       return handlerInput.requestEnvelope.request.type === 'LaunchRequest';

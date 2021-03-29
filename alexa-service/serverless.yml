@@ -62,7 +62,7 @@ custom:
                     - '{targetDate} のゴミは'
                     - '{targetDate} のゴミは何'
 functions:
-  alexa:
-    handler: handler.alexa
+  garbageSkill:
+    handler: garbageSkill.handler
     events:
       - alexaSkill: ${self:custom.alexa.skills.0.id}
