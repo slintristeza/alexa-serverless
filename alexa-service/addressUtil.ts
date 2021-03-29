@@ -1,4 +1,7 @@
-import enrichment from 'imi-enrichment-address';
+import * as Lambda from 'aws-sdk/clients/lambda';
+
+const lambda = new Lambda({ apiVersion: '2015-03-31' });
+const GET_ADDRESS_FUNCTION_NAME = process.env.GET_ADDRESS_FUNCTION_NAME;
 
 type alexaFullAddress = {
   addressLine1: string | null;
@@ -33,17 +36,29 @@ type enrichmentType = {
   };
 };
 
-export const addressConverter = async (address: alexaFullAddress) => {
-  return await enrichment(address.addressLine1);
+const addressConverter = async (address: alexaFullAddress) => {
+  const params = {
+    FunctionName: GET_ADDRESS_FUNCTION_NAME,
+    InvocationType: 'RequestResponse',
+    Payload: JSON.stringify({
+      body: {
+        stateOrRegion: address.stateOrRegion,
+        city: address.city,
+        addressLine1: address.addressLine1,
+      },
+    }),
+  };
+  const result = await lambda.invoke(params).promise();
+  return JSON.parse(JSON.parse(result.Payload.toString()).body).address;
 };
 
 export const getAddress = async (requestEnvelope, serviceClientFactory) => {
   const { deviceId } = requestEnvelope.context.System.device;
-  console.log(deviceId);
   const deviceAddressServiceClient = serviceClientFactory.getDeviceAddressServiceClient();
   const address: alexaFullAddress = await deviceAddressServiceClient.getFullAddress(
     deviceId
   );
   const result: enrichmentType = await addressConverter(address);
+  console.log(result);
   return result;
 };

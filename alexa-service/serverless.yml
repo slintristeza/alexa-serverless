@@ -9,6 +9,7 @@ frameworkVersion: '2'
 plugins:
   - serverless-webpack
   - serverless-alexa-skills
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
@@ -64,5 +65,15 @@ custom:
 functions:
   garbageSkill:
     handler: garbageSkill.handler
+    iamRoleStatementsName: garbageSkill-role-${self:provider.stage}
+    iamRoleStatementsInherit: true # inherit the global statement
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "lambda:InvokeFunction"
+        Resource:
+          - "*"
     events:
       - alexaSkill: ${self:custom.alexa.skills.0.id}
+    environment:
+      GET_ADDRESS_FUNCTION_NAME: getAddress-${self:provider.stage}

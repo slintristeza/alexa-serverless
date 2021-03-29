@@ -3,7 +3,7 @@ import iconv from 'iconv-lite';
 import csv from 'csvtojson';
 
 const parse = (path: string): Promise<any[]> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     let datas: any[] = [];
     fs.createReadStream(path)
       .pipe(iconv.decodeStream('Shift_JIS'))

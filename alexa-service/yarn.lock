@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@geolonia/japanese-numeral/-/japanese-numeral-0.1.13.tgz#f71dd8a3bccbd2d9bc215b88f1fe7b0079c403d6"
   integrity sha512-JcQT7loIPnNJPUdiK1u308R7wfN/tXOwWWsT2NtJcRxSO45ZLxrS/U8ffPCFq7l4WQ7uIa9fr98RwXsdI670hA==
 
+"@types/aws-lambda@^8.10.73":
+  version "8.10.73"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.73.tgz#77773c9accb2cec26fcb7c6b510a555805604a53"
+  integrity sha512-P+a6TRQbRnVQOIjWkmw6F23wiJcF+4Uniasbzx7NAXjLQCVGx/Z4VoMfit81/pxlmcXNxAMGuYPugn6CrJLilQ==
+
 "@types/node@^10.12.18":
   version "10.17.51"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.51.tgz#639538575befbcf3d3861f95c41de8e47124d674"
@@ -2729,6 +2734,13 @@ serverless-alexa-skills@^0.1.0:
     querystring "^0.2.0"
     request-promise "^4.2.2"
     simple-oauth2 "^1.4.0"
+
+serverless-iam-roles-per-function@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/serverless-iam-roles-per-function/-/serverless-iam-roles-per-function-3.1.0.tgz#3bd87011234641f4e4883b1a8aeecb8610ac71c5"
+  integrity sha512-/kNfT169FOOrYtkN6WV3fU9Nt0E2pku/1Vio1My82iKnbUQ9Bx35PSOvdRS32e7mLVwbdwZ5ecMKG1lpsuQLoA==
+  dependencies:
+    lodash "^4.17.20"
 
 serverless-webpack@^5.2.0:
   version "5.3.5"
