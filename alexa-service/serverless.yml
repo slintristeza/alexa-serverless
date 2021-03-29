@@ -29,6 +29,8 @@ custom:
             locales:
               ja-JP:
                 name: Serverless Alexa Typescript
+          permissions:
+            - name: alexa::devices:all:address:full:read
           apis:
             custom:
               endpoint:

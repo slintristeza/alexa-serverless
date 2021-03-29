@@ -1,0 +1,11 @@
+version: '2'
+services:
+  garbage-skill:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    command: ["/bin/bash"]
+    volumes:
+      - .:/garbage-skill
+    tty: false
+    stdin_open: true
