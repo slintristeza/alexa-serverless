@@ -1,6 +1,6 @@
-import fs from 'fs';
-import iconv from 'iconv-lite';
-import csv from 'csvtojson';
+import * as fs from 'fs';
+import * as iconv from 'iconv-lite';
+import * as csv from 'csvtojson';
 
 const parse = (path: string): Promise<any[]> => {
   return new Promise((resolve, _reject) => {
@@ -14,8 +14,8 @@ const parse = (path: string): Promise<any[]> => {
 };
 
 if (!module.parent) {
-  parse('./1-3家庭ごみ収集日（南区）.csv').then((results: any[]) => {
+  parse('./2-3大型ごみ収集日（南区）.csv').then((results: any[]) => {
     console.table(results);
-    fs.writeFileSync('./results.json', JSON.stringify(results, null, '    '));
+    fs.writeFileSync('./largeGarbageCollectionSchedule.json', JSON.stringify(results, null, '    '));
   });
 }
