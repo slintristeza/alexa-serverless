@@ -65,7 +65,7 @@ const garabedeDateIntent = {
           }です。`
         : `${targetDate}のゴミの収集はありません。`;
       if (largeGarbageCollection) {
-        speaachText += 'また、大型ごみの収集があります。'
+        speaachText += 'また、大型ごみの収集があります。';
       }
       return responseBuilder.speak(speaachText).getResponse();
     } catch (error) {
@@ -86,8 +86,72 @@ const garabedeDateIntent = {
   },
 };
 
+const garabedeTypeIntent = {
+  canHandle: (handlerInput) => {
+    return (
+      handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
+      handlerInput.requestEnvelope.request.intent.name === 'garbageTypeIntent'
+    );
+  },
+  handle: async (handlerInput) => {
+    console.log(handlerInput);
+    const {
+      requestEnvelope,
+      serviceClientFactory,
+      responseBuilder,
+    } = handlerInput;
+
+    console.log(requestEnvelope.context.System);
+    try {
+      const address = await getAddress(requestEnvelope, serviceClientFactory);
+      const targetStreet =
+        address.住所.町名 + number2kanji(address.住所.丁目) + '丁目';
+      const targetGroup = addressGroup.filter(
+        (address) => address.町名 === targetStreet
+      );
+      const request = requestEnvelope.request;
+      const intent = (request as IntentRequest).intent;
+      console.log(JSON.stringify(intent, null, 2));
+      const targetTypeName = intent.slots.targetGarbageType.value;
+      const targetType = intent.slots.targetGarbageType.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+      console.log(targetType);
+      if (!targetType) {
+        const speaachText =
+          'ゴミの種別が正しく指定されていません。もう一度やり直してください。';
+        return handlerInput.responseBuilder.speak(speaachText).getResponse();
+      }
+      const garbageTypeList = garbageCollectionSchedule.filter(
+        (item) => item[targetGroup[0].グループ] === targetType
+      );
+      // const largeGarbageTypeList = largeGarbageCollectionSchedule.filter(
+      //   (item) => item[targetGroup[0].グループ] === targetType
+      // );
+      console.log(garbageTypeList);
+      const speaachText = garbageTypeList[0].年月日
+        ? `次の${targetTypeName}の収集日は${garbageTypeList[0].年月日}です。`
+        : `${targetTypeName}の収集予定はありません。`;
+      return responseBuilder.speak(speaachText).getResponse();
+    } catch (error) {
+      if (error.name === 'ServiceError' && error.statusCode === 403) {
+        return handlerInput.responseBuilder
+          .speak(
+            '住所の利用が許可されていません。アレクサアプリの設定で許可してください。'
+          )
+          .withAskForPermissionsConsentCard(['read::alexa:device:all:address'])
+          .getResponse();
+      } else {
+        console.error(error);
+        return handlerInput.responseBuilder
+          .speak('処理に失敗しました。もう一度お試しください。')
+          .getResponse();
+      }
+    }
+  },
+};
+
 export const handler = Ask.SkillBuilders.custom()
   .addRequestHandlers(LaunchRequest)
   .addRequestHandlers(garabedeDateIntent)
+  .addRequestHandlers(garabedeTypeIntent)
   .withApiClient(new Ask.DefaultApiClient())
   .lambda();

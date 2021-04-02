@@ -62,6 +62,48 @@ custom:
                     - '{targetDate} のゴミを教えて'
                     - '{targetDate} のゴミは'
                     - '{targetDate} のゴミは何'
+                  - name: garbageTypeIntent
+                    slots:
+                      - name: targetGarbageType
+                        type: GARBAGE_TYPE
+                    samples:
+                    - '次の {targetGarbageType} の日を教えて'
+                    - '次の {targetGarbageType} の日は'
+                    - '次の {targetGarbageType} の日は何'
+                    - '{targetGarbageType} の日を教えて'
+                    - '{targetGarbageType} の日は'
+                    - '{targetGarbageType} の日は何'
+                types: 
+                  - name: 'GARBAGE_TYPE'
+                    values:
+                      - id: 'burnableGarbage'
+                        name:
+                          value: '可燃'
+                          synonyms:
+                            - '可燃ゴミ'
+                            - '燃えるゴミ'
+                      - id: 'incombustibleGarbage'
+                        name:
+                          value: '不燃'
+                          synonyms:
+                            - '不燃ゴミ'
+                            - '燃えないゴミ'
+                      - id: 'recyclableGarbage'
+                        name:
+                          value: '資源'
+                          synonyms:
+                            - '資源ゴミ'
+                      - id: 'recyclablePlastic'
+                        name:
+                          value: 'リプラ'
+                          synonyms:
+                            - 'リサイクルプラ'
+                            - 'リサイクルプラスチック'
+                      - id: 'unrecyclablePlastic'
+                        name:
+                          value: '他プラ'
+                          synonyms:
+                            - 'その他プラ'
 functions:
   garbageSkill:
     handler: garbageSkill.handler
