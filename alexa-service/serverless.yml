@@ -16,7 +16,9 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: ap-northeast-1
+  stage: ${opt:stage, 'dev'}
   profile: ${self:custom.config.AWS_PROFILE}
+  versionFunctions: false
 
 custom:
   config: ${file(../config/secrets.yml)}
