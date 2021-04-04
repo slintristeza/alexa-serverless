@@ -11,10 +11,15 @@
 - resource-service
   S3などのインフラの定義
 
-## デプロイ
+## 初回デプロイ
 
-1. Step 1: Run `sls alexa auth` to authenticate
-2. Step 2: Run `sls alexa create --name "Serverless Alexa Typescript" --locale ja-JP --type custom` to create a new skill
-3. `sls deploy`
-4. `sls alexa update`
-5. `sls alexa build`
+1. `cd resource-service`
+2. `yarn`
+3. `sls deploy --stage dev`
+4. `cd ../alexa-service`
+5. `yarn`
+6. `sls alexa auth`
+7. `sls alexa create --name "your alexa skill name" --locale ja-JP --type custom` to create a new skill
+8. `sls deploy --stage dev`
+9. `sls alexa update`
+10. `sls alexa build`
