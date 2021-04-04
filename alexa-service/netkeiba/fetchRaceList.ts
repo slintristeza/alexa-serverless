@@ -24,7 +24,7 @@ const blankRace: Race = {
 const fetchRaces = async (page) => {
   try {
     const url = 'https://race.netkeiba.com/top/race_list.html';
-    await page.goto(url, { waitUntil: 'networkidle0' });
+    await page.goto(url);
     const races = [];
     const items = await page.$$(
       '#RaceTopRace .RaceList_Box .RaceList_DataList'
