@@ -16,7 +16,7 @@ const LaunchRequest = {
         console.log(race.title);
         speaachText += race.raceNum.replace('R', 'レース') + '、' + race.title + '、';
       });
-      // const speaachText = races[0].title;
+      
       return handlerInput.responseBuilder.speak(speaachText).getResponse();
     } catch (err) {
       console.error(err);
