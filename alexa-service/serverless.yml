@@ -110,6 +110,35 @@ custom:
                           value: '他プラ'
                           synonyms:
                             - 'その他プラ'
+      - id: amzn1.ask.skill.${self:custom.config.SKILL_ID_1}
+        manifest:
+          publishingInformation:
+            locales:
+              ja-JP:
+                name: Horse Skill
+          apis:
+            custom:
+              endpoint:
+                uri: arn:aws:lambda:ap-northeast-1:${self:custom.config.AWS_ACCOUNT_ID}:function:${self:custom.config.HORSE_SKILL_FUNCTION_NAME}
+          manifestVersion: '1.0'
+        models:
+          ja-JP:
+            interactionModel:
+              languageModel:
+                invocationName: '馬スキル'
+                intents:
+                  - name: AMAZON.CancelIntent
+                    samples: []
+                  - name: AMAZON.HelpIntent
+                    samples: []
+                  - name: AMAZON.StopIntent
+                    samples: []
+                  - name: garbageDateIntent
+                    slots:
+                      - name: targetDate
+                        type: AMAZON.DATE
+                    samples:
+                    - '{targetDate} のレースを教えて'
 functions:
   garbageSkill:
     handler: garbageSkill.handler
@@ -125,3 +154,9 @@ functions:
       - alexaSkill: ${self:custom.alexa.skills.0.id}
     environment:
       GET_ADDRESS_FUNCTION_NAME: getAddress-${self:provider.stage}
+  horseSkill:
+    handler: horseSkill.handler
+    memorySize: 2048
+    timeout: 60
+    events:
+      - alexaSkill: ${self:custom.alexa.skills.1.id}
