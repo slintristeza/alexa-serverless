@@ -10,6 +10,7 @@ plugins:
   - serverless-webpack
   - serverless-alexa-skills
   - serverless-iam-roles-per-function
+  - serverless-layers
 
 provider:
   name: aws
@@ -18,7 +19,12 @@ provider:
   profile: ${self:custom.config.AWS_PROFILE}
 
 custom:
-  config: ${file(./secrets.yml)}
+  config: ${file(../config/secrets.yml)}
+  webpack:
+    webpackConfig: "./webpack.config.js"
+  serverless-layers:
+    dependenciesPath: ./package.json
+    layersDeploymentBucket: ${self:custom.config.LAYERS_BUCKET}-${self:provider.stage}
   alexa:
     # Step 1: Run `sls alexa auth` to authenticate
     # Step 2: Run `sls alexa create --name "Serverless Alexa Typescript" --locale en-GB --type custom` to create a new skill

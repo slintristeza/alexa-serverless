@@ -1,0 +1,32 @@
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+
+service: alexa-skill-resources
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  profile: ${self:custom.config.AWS_PROFILE}
+  region: ${opt:region, 'ap-northeast-1'}
+  versionFunctions: false # Optional function versioning
+
+custom:
+  config: ${file(../config/secrets.yml)}
+
+package:
+  individually: true
+
+# CloudFormation resource templates here
+resources:
+  Resources:
+    # S3 bucket for layers
+    layersBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.config.LAYERS_BUCKET}-${self:provider.stage}
