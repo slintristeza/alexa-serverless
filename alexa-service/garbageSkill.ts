@@ -2,6 +2,8 @@ import * as Ask from 'ask-sdk';
 import { IntentRequest } from 'ask-sdk-model';
 import { number2kanji } from '@geolonia/japanese-numeral';
 import 'source-map-support/register';
+import * as Sentry from "@sentry/node";
+import withSentry from "serverless-sentry-lib";
 
 import { getAddress } from './addressUtil';
 import addressGroup from './csvUtils/addressGroup.json';
@@ -36,6 +38,7 @@ const garabedeDateIntent = {
 
     console.log(requestEnvelope.context.System);
     try {
+      Sentry.captureMessage("Hello from Lambda!");
       const address = await getAddress(requestEnvelope, serviceClientFactory);
       const targetStreet =
         address.住所.町名 + number2kanji(address.住所.丁目) + '丁目';
@@ -149,9 +152,9 @@ const garabedeTypeIntent = {
   },
 };
 
-export const handler = Ask.SkillBuilders.custom()
+export const handler = withSentry(Ask.SkillBuilders.custom()
   .addRequestHandlers(LaunchRequest)
   .addRequestHandlers(garabedeDateIntent)
   .addRequestHandlers(garabedeTypeIntent)
   .withApiClient(new Ask.DefaultApiClient())
-  .lambda();
+  .lambda());

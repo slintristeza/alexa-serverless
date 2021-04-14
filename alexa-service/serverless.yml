@@ -11,6 +11,7 @@ plugins:
   - serverless-alexa-skills
   - serverless-iam-roles-per-function
   - serverless-layers
+  - serverless-sentry
 
 provider:
   name: aws
@@ -24,6 +25,8 @@ custom:
   config: ${file(../config/secrets.yml)}
   webpack:
     webpackConfig: "./webpack.config.js"
+  sentry:
+    dsn: ${self:custom.config.SENTRY_DNS}
   serverless-layers:
     dependenciesPath: ./package.json
     layersDeploymentBucket: ${self:custom.config.LAYERS_BUCKET}-${self:provider.stage}

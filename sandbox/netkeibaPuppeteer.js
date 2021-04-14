@@ -16,7 +16,7 @@ const PUPPETEER_OPTIONS = {
 const fetchRaces = async (page) => {
   try {
     const url = 'https://race.netkeiba.com/top/race_list.html';
-    await page.goto(url, { waitUntil: 'networkidle0' });
+    await page.goto(url);
     const races = [];
     const items = await page.$$(
       '#RaceTopRace .RaceList_Box .RaceList_DataList'
@@ -57,12 +57,35 @@ const fetchRaces = async (page) => {
   }
 };
 
+const fetchRaceDetails = async (targetRace, page) => {
+  try {
+    await page.goto(targetRace.url);
+    const raceDetails = [];
+    const items = await page.$$(
+      '.Shutuba_Table > tbody .HorseList'
+    );
+    console.log(items);
+
+    for await (const item of items) {
+      const horseName = await item.$eval('.HorseInfo .HorseName', (e) => e.textContent);
+      console.log(horseName);
+    }
+
+    return raceDetails;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 (async () => {
   const browser = await puppeteer.launch(PUPPETEER_OPTIONS);
   const page = await browser.newPage();
 
   const races = await fetchRaces(page);
-  console.log(races);
+  // console.log(races);
+  const targetRace= races.find(race => race.racecourse === '中山' && race.raceNum === '10R');
+  console.log(targetRace);
+  const raceDetails = await fetchRaceDetails(targetRace, page)
 
   await browser.close();
 })();

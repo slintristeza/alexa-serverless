@@ -1,5 +1,6 @@
 import * as Ask from 'ask-sdk';
 import 'source-map-support/register';
+const withSentry = require("serverless-sentry-lib");
 
 import { fetchRaceList } from './netkeiba/fetchRaceList';
 
@@ -26,6 +27,6 @@ const LaunchRequest = {
   },
 };
 
-export const handler = Ask.SkillBuilders.custom()
+export const handler = withSentry(Ask.SkillBuilders.custom()
   .addRequestHandlers(LaunchRequest)
-  .lambda();
+  .lambda());
